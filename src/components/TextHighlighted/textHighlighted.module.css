@@ -1,0 +1,24 @@
+.textHighlighted {
+    background-color: #d7f5fc;
+    padding: 40px;
+    border-radius: 15px;
+    width: 70%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+}
+
+.textTitle {
+    margin-bottom: 10px;
+    color: #02a8cd;
+}
+
+.textDescription {
+    color: #666;
+    text-align: center;
+    font-weight: 500;
+}

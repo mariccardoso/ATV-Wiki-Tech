@@ -1,6 +1,6 @@
 .cardsSection{
     width: 80%;
-    height: 50vh;
+    margin-top: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -8,7 +8,7 @@
 
 .card{
     width: 300px;
-    height: 200px;
+    height: auto;
     background-color: #dfd7fc;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -18,7 +18,11 @@
     align-items: center;
     margin: 10px;
     text-decoration: none;
+    padding: 20px;
+    gap: 10px;
 }
+
+
 
 
 .card h2 {
@@ -29,6 +33,14 @@
 .card p {
     color: #666;
     text-align: center;
+}
+
+.cardAuthor {
+    color: #00bbae;
+    font-size: 0.9rem;
+    font-style: italic;
+    font-weight: bold;
+    margin-top: 5px;
 }
 
 .card:hover {

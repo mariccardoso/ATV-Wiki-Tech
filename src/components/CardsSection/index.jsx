@@ -8,6 +8,7 @@ const CardsSection = ({conteúdo}) => {
                 <Link key={index} className={styles.card} href={item.link}>
                     <h2 className={styles.cardTitle}>{item.title}</h2>
                     <p className={styles.cardDescription}>{item.description}</p>
+                    <p className={styles.cardAuthor}>{item.author}</p>
                 </Link>
             ))}
         </section>

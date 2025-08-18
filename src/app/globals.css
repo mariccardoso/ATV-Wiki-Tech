@@ -6,3 +6,11 @@
   margin: 0;
   font-family: 'Nata Sans', sans-serif;
 }
+
+code {
+  background:#f4ebff;
+  color:#5a2877;
+  padding:.15rem .35rem .2rem;
+  border-radius:5px;
+  font-size:.63rem;
+}
