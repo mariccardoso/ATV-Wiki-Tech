@@ -7,9 +7,18 @@
   font-family: 'Nata Sans', sans-serif;
 }
 
+:root {
+  --c-surface:#ffffff;
+  --c-border:#e2e6ef;
+  --c-accent:#d97cfe;
+  --c-accent2:#80d1ff;
+  --c-accent3:#90f5e4;
+  --c-text:#2f3440;
+  --c-soft:#5a6474;
+}
+
 code {
-  background:#f4ebff;
-  color:#5a2877;
+  color:#faf2ff;
   padding:.15rem .35rem .2rem;
   border-radius:5px;
   font-size:.63rem;

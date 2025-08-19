@@ -1,60 +1,68 @@
 import Header from "@/components/Header";
 import HeroSectionPages from "@/components/HeroSectionPages";
+import { LocalNav } from "@/components/LocalNav";
+import { Section } from "@/components/Section";
+import { CardGrid, Card } from "@/components/CardGrid";
+import { List } from "@/components/List";
+import { DualList } from "@/components/DualList";
+import { CodeBlock } from "@/components/CodeBlock";
 import styles from "./arquivos.module.css";
 
 export default function Arquivos() {
+  const nav = [
+    { href:"#visao", label:"Visão" },
+    { href:"#error", label:"error.js" },
+    { href:"#global", label:"global-error.js" },
+    { href:"#diff", label:"Diferença" },
+    { href:"#notfound", label:"not-found.js" },
+    { href:"#loading", label:"loading.js" },
+    { href:"#layout", label:"layout.js" },
+    { href:"#page", label:"page.js" }
+  ];
+
+  const files = [
+    { title:"page.js", desc:"Conteúdo do segmento." },
+    { title:"layout.js", desc:"Shell persistente." },
+    { title:"loading.js", desc:"Fallback rápido." },
+    { title:"error.js", desc:"Erro local." },
+    { title:"global-error.js", desc:"Erro global." },
+    { title:"not-found.js", desc:"404 custom." }
+  ];
+
+  const errorLocalPoints = [
+    "Escopo da rota onde está",
+    "Mantém layouts ancestrais",
+    "Recebe error e reset()",
+    "Para falhas recuperáveis"
+  ];
+  const errorGlobalPoints = [
+    "Na raiz app/",
+    "Captura erros não tratados",
+    "Renderiza html/body",
+    "Fallback crítico + logging"
+  ];
+
   return (
     <main className={styles.main}>
       <Header />
       <HeroSectionPages
         title="Arquivos Especiais"
-        description="Arquitetura do App Router: controle de layout, erros, loading e 404."
+        description="Arquitetura do App Router: layout, erros, loading e 404."
       />
+      <LocalNav items={nav} />
 
-      <nav className={styles.nav}>
-        <a href="#visao">Visão</a>
-        <a href="#error">error.js</a>
-        <a href="#global">global-error.js</a>
-        <a href="#diff">Diferença</a>
-        <a href="#notfound">not-found.js</a>
-        <a href="#loading">loading.js</a>
-        <a href="#layout">layout.js</a>
-        <a href="#page">page.js</a>
-      </nav>
-
-      <section id="visao" className={styles.section}>
-        <h2>Mapa Geral</h2>
-        <p className={styles.lead}>
-          Dentro de <code>app/</code>, cada pasta representa um segmento de rota.
-          Arquivos especiais controlam comportamento de erro, carregamento, 404,
-          layout persistente e conteúdo.
-        </p>
-        <div className={styles.miniGrid}>
-          {["page.js", "layout.js", "loading.js", "error.js", "global-error.js", "not-found.js"].map(i => (
-            <div key={i} className={styles.mini}>
-              <strong>{i}</strong>
-              <span>
-                {i === "page.js" && "Conteúdo"}
-                {i === "layout.js" && "Shell persistente"}
-                {i === "loading.js" && "Fallback rápido"}
-                {i === "error.js" && "Erro local"}
-                {i === "global-error.js" && "Erro global"}
-                {i === "not-found.js" && "404 custom"}
-              </span>
-            </div>
+      <Section id="visao" title="Mapa Geral">
+        <p>Dentro de app/, cada pasta é um segmento de rota. Arquivos especiais controlam erro, carregamento, 404, layout e conteúdo.</p>
+        <CardGrid>
+          {files.map(f => (
+            <Card key={f.title} title={f.title}>{f.desc}</Card>
           ))}
-        </div>
-      </section>
+        </CardGrid>
+      </Section>
 
-      <section id="error" className={styles.sectionAlt}>
-        <h2>error.js (Local)</h2>
-        <ul className={styles.list}>
-          <li>Escopo apenas da pasta onde está.</li>
-          <li>Substitui o conteúdo que falhou mantendo layouts ancestrais.</li>
-          <li>Recebe <code>error</code> e <code>reset()</code>.</li>
-          <li>Ideal para falhas recuperáveis de dados.</li>
-        </ul>
-        <pre className={styles.code}>{`"use client";
+      <Section id="error" title="error.js" alt>
+        <List items={errorLocalPoints} />
+        <CodeBlock code={`"use client";
 export default function Error({ error, reset }) {
   return (
     <div>
@@ -63,18 +71,12 @@ export default function Error({ error, reset }) {
       <button onClick={reset}>Tentar novamente</button>
     </div>
   );
-}`}</pre>
-      </section>
+}`} />
+      </Section>
 
-      <section id="global" className={styles.section}>
-        <h2>global-error.js (Global)</h2>
-        <ul className={styles.list}>
-          <li>Na raiz: <code>app/global-error.js</code>.</li>
-          <li>Cobre erros não tratados localmente.</li>
-          <li>Renderiza <code>&lt;html&gt;</code> e <code>&lt;body&gt;</code>.</li>
-          <li>Útil para logging central e fallback crítico.</li>
-        </ul>
-        <pre className={styles.code}>{`"use client";
+      <Section id="global" title="global-error.js">
+        <List items={errorGlobalPoints} />
+        <CodeBlock code={`"use client";
 export default function GlobalError({ error, reset }) {
   return (
     <html>
@@ -85,53 +87,43 @@ export default function GlobalError({ error, reset }) {
       </body>
     </html>
   );
-}`}</pre>
-      </section>
+}`} />
+      </Section>
 
-      <section id="diff" className={styles.sectionAlt}>
-        <h2>Diferença Rápida</h2>
-        <div className={styles.compare}>
-          <div>
-            <h3>error.js</h3>
-            <p>Escopo local, preserva layout, reset imediato.</p>
-          </div>
-          <div>
-            <h3>global-error.js</h3>
-            <p>Cobre tudo, substitui a UI, usado para falha crítica.</p>
-          </div>
-        </div>
-      </section>
+      <Section id="diff" title="Diferença" alt>
+        <DualList
+          left={["Escopo local", "Preserva layout", "Reset imediato"]}
+          right={["Cobre toda a app", "Substitui UI", "Falha crítica"]}
+        />
+      </Section>
 
-      <section id="notfound" className={styles.section}>
-        <h2>not-found.js</h2>
-        <p>Página 404 custom. Acionada automaticamente ou via <code>notFound()</code> em rotas dinâmicas.</p>
-        <pre className={styles.code}>{`// app/blog/[slug]/not-found.js
+      <Section id="notfound" title="not-found.js">
+        <p>Página 404 custom acionada automaticamente ou via <code>notFound()</code>.</p>
+        <CodeBlock code={`// app/blog/[slug]/not-found.js
 export default function NotFound() {
   return <h2>Post não encontrado</h2>;
 }
 
-// page que chama:
+// Uso:
 import { notFound } from "next/navigation";
 export default async function Post({ params }) {
   const post = await getPost(params.slug);
   if (!post) notFound();
   return <article>{post.title}</article>;
-}`}</pre>
-      </section>
+}`} />
+      </Section>
 
-      <section id="loading" className={styles.sectionAlt}>
-        <h2>loading.js</h2>
-        <p>Fallback imediato (Suspense por segmento). Some quando os dados chegam.</p>
-        <pre className={styles.code}>{`// app/produtos/loading.js
+      <Section id="loading" title="loading.js" alt>
+        <p>Fallback imediato por segmento (Suspense). Some ao terminar o fetch.</p>
+        <CodeBlock code={`// app/produtos/loading.js
 export default function Loading() {
   return <p>Carregando...</p>;
-}`}</pre>
-      </section>
+}`} />
+      </Section>
 
-      <section id="layout" className={styles.section}>
-        <h2>layout.js</h2>
-        <p>Define estrutura persistente (nav, footer, tema). Empilha hierarquias de layouts.</p>
-        <pre className={styles.code}>{`export const metadata = { title: "Site" };
+      <Section id="layout" title="layout.js">
+        <p>Define estrutura persistente: navegação, footer, tema e empilha hierarquias.</p>
+        <CodeBlock code={`export const metadata = { title: "Site" };
 export default function RootLayout({ children }) {
   return (
     <html lang="pt-BR">
@@ -142,17 +134,16 @@ export default function RootLayout({ children }) {
       </body>
     </html>
   );
-}`}</pre>
-      </section>
+}`} />
+      </Section>
 
-      <section id="page" className={styles.sectionAlt}>
-        <h2>page.js</h2>
-        <p>Entrada de rota. Pode ser assíncrona, faz fetch no server e retorna a UI.</p>
-        <pre className={styles.code}>{`export default async function Dashboard() {
+      <Section id="page" title="page.js" alt>
+        <p>Entrada de rota. Pode ser assíncrona e realizar fetch no server.</p>
+        <CodeBlock code={`export default async function Dashboard() {
   const data = await getData();
   return <div>{JSON.stringify(data)}</div>;
-}`}</pre>
-      </section>
+}`} />
+      </Section>
 
       <footer className={styles.footer}>
         Arquivos estruturais — controle de UX no App Router.

@@ -39,3 +39,20 @@
         background-position: 0% 50%;
     }
 }
+
+@media (max-width: 768px) {
+    .heroSection {
+        height: 40vh;
+    }
+
+    .heroSection h1 {
+        font-size: 2rem;
+        width: 80%;
+    }
+
+    .heroSection p {
+        font-size: 1rem;
+        padding: 0 20px;
+    }
+}
+

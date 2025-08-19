@@ -1,54 +1,46 @@
 import Header from "@/components/Header";
 import HeroSectionPages from "@/components/HeroSectionPages";
+import { LocalNav } from "@/components/LocalNav";
+import { Section } from "@/components/Section";
+import { CardGrid, Card } from "@/components/CardGrid";
+import { List } from "@/components/List";
 import styles from "./biblioteca.module.css";
 
 export default function Bibliotecas() {
+  const nav = [
+    { href:"#exemplos", label:"Exemplos" },
+    { href:"#caracteristicas", label:"Características" },
+    { href:"#comparativo", label:"Comparativo" }
+  ];
+
   const exemplos = [
-    { title:"Bootstrap", description:"Framework CSS front‑end com componentes responsivos.", link:"https://getbootstrap.com/" },
-    { title:"Bulma", description:"Framework CSS moderno baseado em Flexbox.", link:"https://bulma.io/" },
-    { title:"Tailwind", description:"Framework utilitário para compor estilos via classes.", link:"https://tailwindcss.com/" }
+    { title:"Bootstrap", subtitle:"CSS", desc:"Componentes responsivos.", link:"https://getbootstrap.com/" },
+    { title:"Bulma", subtitle:"CSS", desc:"Framework moderno flexbox.", link:"https://bulma.io/" },
+    { title:"Tailwind", subtitle:"Utilitário", desc:"Classes utilitárias configuráveis.", link:"https://tailwindcss.com/" }
   ];
 
   const caracteristicas = [
     {
       title:"Bootstrap",
-      pros:[
-        "Componentes prontos responsivos",
-        "Grid consolidado",
-        "Ecossistema grande"
-      ],
-      cons:[
-        "HTML cheio de classes",
-        "Customização profunda exige SASS",
-        "Tendência a layouts parecidos"
-      ]
+      pros:["Componentes prontos","Grid consolidado","Ecossistema grande"],
+      cons:["Muitas classes","Customização exige SASS","Layouts parecidos"]
     },
     {
       title:"Bulma",
-      pros:[
-        "Só CSS (sem JS)",
-        "Modular (importa só o necessário)",
-        "Base flexbox organizada"
-      ],
-      cons:[
-        "Sem plugins JS nativos",
-        "Curva de aprender util classes",
-        "Algumas limitações de componentes"
-      ]
+      pros:["Só CSS (sem JS)","Modular","Base flexbox limpa"],
+      cons:["Sem plugins JS nativos","Curva util classes","Limitações de componentes"]
     },
     {
       title:"Tailwind",
-      pros:[
-        "Altíssima personalização",
-        "Purga gera bundle pequeno",
-        "Design system direto no config"
-      ],
-      cons:[
-        "Markup verboso",
-        "Requer build/purga",
-        "Curva inicial de tokens"
-      ]
+      pros:["Alta personalização","Purga reduz bundle","Design system via config"],
+      cons:["Markup verboso","Requer build/purga","Curva de tokens"]
     }
+  ];
+
+  const comparativo = [
+    { title:"Bootstrap", text:"Velocidade inicial com muitos componentes." },
+    { title:"Bulma", text:"CSS puro leve e modular." },
+    { title:"Tailwind", text:"Escala de design consistente via tokens." }
   ];
 
   return (
@@ -56,73 +48,49 @@ export default function Bibliotecas() {
       <Header />
       <HeroSectionPages
         title="Bibliotecas de Estilo"
-        description="Comparação rápida entre abordagens de estilização populares."
+        description="Comparação de abordagens CSS e utilitárias."
       />
+      <LocalNav items={nav} />
 
-      <nav className={styles.localNav}>
-        <a href="#exemplos">Exemplos</a>
-        <a href="#caracteristicas">Características</a>
-        <a href="#comparativo">Comparativo</a>
-      </nav>
-
-      <section id="exemplos" className={styles.section}>
-        <h2>Principais Exemplos</h2>
-        <div className={styles.cards}>
-          {exemplos.map(card => (
-            <a
-              key={card.title}
-              className={styles.card}
-              href={card.link}
-              target="_blank"
-              rel="noreferrer"
+      <Section id="exemplos" title="Principais Exemplos">
+        <CardGrid>
+          {exemplos.map(e => (
+            <Card
+              key={e.title}
+              title={e.title}
+              subtitle={e.subtitle}
+              href={e.link}
+              footer="Visitar ↗"
             >
-              <h3>{card.title}</h3>
-              <p>{card.description}</p>
-              <span className={styles.visit}>Visitar ↗</span>
-            </a>
+              {e.desc}
+            </Card>
           ))}
-        </div>
-      </section>
+        </CardGrid>
+      </Section>
 
-      <section id="caracteristicas" className={styles.sectionAlt}>
-        <h2>Características</h2>
-        <div className={styles.featuresGrid}>
-          {caracteristicas.map(b => (
-            <div key={b.title} className={styles.featureBlock}>
-              <h3>{b.title}</h3>
-              <div className={styles.columns}>
-                <ul className={styles.list}>
-                  {b.pros.map(p => <li key={p} className={styles.pro}>{p}</li>)}
-                </ul>
-                <ul className={styles.list}>
-                  {b.cons.map(c => <li key={c} className={styles.con}>{c}</li>)}
-                </ul>
-              </div>
-            </div>
+      <Section id="caracteristicas" title="Características" alt>
+        <CardGrid>
+          {caracteristicas.map(c => (
+            <Card key={c.title} title={c.title}>
+              <strong>Prós:</strong>
+              <List items={c.pros} />
+              <strong>Contras:</strong>
+              <List items={c.cons} />
+            </Card>
           ))}
-        </div>
-      </section>
+        </CardGrid>
+      </Section>
 
-      <section id="comparativo" className={styles.section}>
-        <h2>Resumo Comparativo</h2>
-        <div className={styles.compare}>
-          <div>
-            <h4>Bootstrap</h4>
-            <p>Componentização pronta + ecossistema extenso → velocidade inicial.</p>
-          </div>
-          <div>
-            <h4>Bulma</h4>
-            <p>CSS puro modular → leve e simples de integrar.</p>
-          </div>
-          <div>
-            <h4>Tailwind</h4>
-            <p>Utilitário/tokens → máxima flexibilidade e design consistente.</p>
-          </div>
-        </div>
-      </section>
+      <Section id="comparativo" title="Resumo Comparativo">
+        <CardGrid>
+          {comparativo.map(c => (
+            <Card key={c.title} title={c.title}>{c.text}</Card>
+          ))}
+        </CardGrid>
+      </Section>
 
       <footer className={styles.footer}>
-        <p>Bibliotecas frontend — diferentes estratégias para produtividade e personalização.</p>
+        <p>Bibliotecas frontend — produtividade vs personalização.</p>
       </footer>
     </main>
   );
